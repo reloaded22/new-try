@@ -1,9 +1,29 @@
 import express from "express";
 import { hello, readSecrets } from "../controllers/userControllers.js";
-const testRouter = express.Router();
+const userRouter = express.Router();
 
-testRouter.get("/", hello);
+userRouter.get("/", hello);
 
-testRouter.get("/home", readSecrets);
+userRouter.get("/home", readSecrets);
 
-export default testRouter;
+userRouter.post("/register", registerUser); 
+
+userRouter.get("/test-login", (req, res) => {
+  // res.writeHead(200, { "Content-Type": "text/html" }); !Only with res.end()
+  res.send(
+    `<div>
+    <p>Test Login<p>
+    <form action="/api/login" method="post">
+      <input type="text" name="username">
+      <input type="password" name="password">
+      <input type="submit">
+    </form>
+    </div>`
+  );
+});
+
+userRouter.post("/login", authenticateUser);
+
+userRouter.get("/logout", logOut); 
+
+export default userRouter;
