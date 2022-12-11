@@ -1,7 +1,9 @@
 import express from "express";
-import hello from "../controllers/userControllers.js";
+import { hello, readSecrets } from "../controllers/userControllers.js";
 const testRouter = express.Router();
 
-testRouter.get('/', hello);
+testRouter.get("/", hello);
+
+testRouter.get("/home", hello);
 
 export default testRouter;

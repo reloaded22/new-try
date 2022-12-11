@@ -13,7 +13,7 @@ const app = express();
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.use("/test", testRouter);
+app.use("/", testRouter);
 
 const PORT = process.env.PORT || 3000;
 
