@@ -1,5 +1,5 @@
 import express from "express";
-import { hello, readSecrets, registerUser, authenticateUser, logOut } from "../controllers/userControllers.js";
+import { hello, readSecrets, registerUser, authenticateUser, logOut, addSecret, deleteSecret, updateSecret, adminDelete, adminUpdate } from "../controllers/userControllers.js";
 const userRouter = express.Router();
 
 userRouter.get("/", hello);
@@ -25,5 +25,15 @@ userRouter.get("/test-login", (req, res) => {
 userRouter.post("/login", authenticateUser);
 
 userRouter.get("/logout", logOut); 
+
+userRouter.post("/submit", addSecret);
+
+userRouter.get("/delete/:index", deleteSecret);
+
+userRouter.post("/submit-update", updateSecret);
+
+userRouter.get("/admin-delete/:index", adminDelete);
+
+userRouter.post("/admin-update", adminUpdate);
 
 export default userRouter;

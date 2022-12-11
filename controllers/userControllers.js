@@ -95,6 +95,123 @@ const logOut = (req, res) => {
   });
 };
 
+const addSecret = (req, res) => {
+  User.updateOne(
+    { _id: req.user._id },
+    { $push: { secrets: req.body.secret } },
+    (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Secret saved successfully\n");
+        res.json({ redirect: "/app/my-secrets" });
+      }
+    }
+  );
+};
+
+const updateSecret = (req, res) => {
+  const { index, secret } = req.body;
+  const oldSecret = req.user.secrets[index];
+  User.updateOne(
+    { _id: req.user._id, secrets: oldSecret },
+    { $set: { "secrets.$": secret } },
+    (err) => {
+      if (err) {
+        console.log(err);
+        res.json({
+          message: err.message,
+        });
+      } else {
+        console.log("Secret updated successfully\n");
+        res.json({
+          message: "Secret updated successfully",
+        });
+      }
+    }
+  );
+};
+
+const adminUpdate = (req, res) => {
+  const { user, secret, index } = req.body;
+  const secrets = user.secrets;
+  const oldSecret = secrets[index];
+  User.updateOne(
+    { _id: user._id, secrets: oldSecret },
+    { $set: { "secrets.$": secret } },
+    (err) => {
+      if (err) {
+        console.log(err);
+        res.json({
+          message: err.message,
+        });
+      } else {
+        console.log("Secret updated successfully\n");
+        res.json({
+          message: "Secret updated successfully",
+        });
+      }
+    }
+  );
+};
+
+const deleteSecret = (req, res) => {
+  const index = req.params.index;
+  if (req.isAuthenticated()) {
+    const secret = req.user.secrets[index];
+    User.updateOne(
+      { _id: req.user._id },
+      { $pull: { secrets: secret } },
+      (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("Secret deleted successfully\n");
+          res.json({
+            loggedIn: req.isAuthenticated(),
+            index,
+            secret,
+          });
+        }
+      }
+    );
+  } else {
+    console.log("User needs to login to see the requested page\n");
+    res.json({
+      loggedIn: req.isAuthenticated(),
+      index: index,
+    });
+  }
+};
+
+const adminDelete = (req, res) => {
+  const index = req.params.index;
+  const { userid } = url.parse(req.url, true).query;
+  console.log("userid:");
+  console.log(userid);
+  if (req.isAuthenticated()) {
+    User.findOne({ _id: userid }).then((user) => {
+      console.log(user);
+      const secret = user.secrets[index];
+      console.log(secret);
+      User.updateOne({ _id: userid }, { $pull: { secrets: secret } }, (err) => {
+        if (!err) {
+          console.log("Secret deleted successfully\n");
+          res.status(200).json({ message: "Success" });
+        } else {
+          console.error(err);
+          res.status(500).json({ error: err });
+        }
+      });
+    });
+  } else {
+    console.log("User needs to login to see the requested page\n");
+    res.json({
+      loggedIn: req.isAuthenticated(),
+      index: index,
+    });
+  }
+};
 
 export {
     hello,
@@ -102,4 +219,9 @@ export {
     registerUser,
     authenticateUser,
     logOut,
+    addSecret,
+    updateSecret,
+    deleteSecret,
+    adminUpdate,
+    adminDelete,
 }
