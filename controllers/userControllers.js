@@ -1,10 +1,10 @@
-import Test from "../models/Test.js";
+import User from "../models/User.js";
 
 
 
 const hello = (req, res) => {
     console.log('Hello bitches');
-    Test.find((e, items) => {
+    User.find((e, items) => {
         if (e) console.log(e.message)
         else res.json(items)
     })

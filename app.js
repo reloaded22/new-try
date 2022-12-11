@@ -1,7 +1,7 @@
 // const express = require('express');
 import express, { json } from "express";
 import mongoDbConnection from "./config/mongoDbConnection.js";
-import testRouter from "./routes/testRoutes.js";
+import testRouter from "./routes/userRoutes.js";
 import dotenv from "dotenv";
 
 dotenv.config();

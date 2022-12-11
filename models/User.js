@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const testSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -10,10 +10,9 @@ const testSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-  },
-  { collection: "eb-test-collection" }
+  }
 );
 
-const Test = new mongoose.model("eb-test-collection", testSchema);
+const User = new mongoose.model("user", userSchema);
 
-export default Test;
+export default User;
