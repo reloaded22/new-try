@@ -4,6 +4,6 @@ const testRouter = express.Router();
 
 testRouter.get("/", hello);
 
-testRouter.get("/home", hello);
+testRouter.get("/home", readSecrets);
 
 export default testRouter;
