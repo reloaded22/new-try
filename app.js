@@ -1,5 +1,5 @@
 // const express = require('express');
-import express, { json } from "express";
+import express, { json, urlencoded } from "express";
 import mongoDbConnection from "./config/mongoDbConnection.js";
 import testRouter from "./routes/userRoutes.js";
 import dotenv from "dotenv";
@@ -10,8 +10,8 @@ mongoDbConnection();
 
 // const app = express();
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 app.use("/test", testRouter);
 
