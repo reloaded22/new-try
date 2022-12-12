@@ -104,7 +104,7 @@ const addSecret = (req, res) => {
         console.log(err);
       } else {
         console.log("Secret saved successfully\n");
-        res.json({ redirect: "/app/my-secrets" });
+        res.json({ redirect: "/my-secrets" });
       }
     }
   );
