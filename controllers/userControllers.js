@@ -4,7 +4,7 @@ import url from "url";
 
 
 const hello = (req, res) => {
-    console.log('Hello bitches');
+    console.log('Hello World');
     User.find((e, items) => {
         if (e) console.log(e.message)
         else res.json(items)
