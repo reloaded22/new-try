@@ -30,7 +30,7 @@ app.use(passport.session());
 app.use("/api", userRouter);
 
 // SERVER CONNECTION //
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5500;
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
